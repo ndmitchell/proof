@@ -1,0 +1,132 @@
+
+-- FOLD
+
+foldl f z []     = z
+foldl f z (x:xs) = foldl f (f z x) xs
+
+
+-- APPEND
+
+(x:xs) ++ ys = x : (xs ++ ys)
+[] ++ ys = ys
+
+
+$[
+    xs ++ (ys ++ zs) == (xs ++ ys) ++ zs
+]
+
+
+-- REVERSE
+reverse = foldl (:) []
+
+
+$[
+    rnf xs ==> reverse (reverse xs) == xs
+    reverse (xs++ys) == reverse ys ++ reverse xs
+    reverse (x:xs) == reverse xs ++ [x]
+]
+
+
+propRev (xs :: [Int]) = reverse (reverse xs) == xs
+
+
+(==) (x:xs) (y:ys) = x == x && xs == ys
+(==) [] [] = True
+(==) _ _ = False
+
+reverse xs = rev xs []
+
+rev (x:xs) ys = rev xs (x:ys)
+rev [] ys = ys
+
+
+reverse (reverse xs) == xs
+rev (reverse xs) [] == xs
+rev (rev xs []) [] == xs
+
+-- 1. xs = _|_
+_|_
+
+-- 1. xs = []
+rev (rev [] []) [] == []
+rev [] [] == []
+[] == []
+True
+
+-- 1. xs = y:ys
+rev (rev (y:ys) []) [] == (y:ys)
+rev (rev ys (y:[])) == y:ys
+
+-- GENERALISE, using homeomorphic!
+
+rev (rev ys z) == y:ys
+
+
+
+reverse (reverse (xs++ys)) == xs++ys
+
+reverse (xs++ys) == reverse ys ++ reverse xs
+
+y:ys == [y]++ys
+
+
+rev (rev (y:ys) []) [] == (y:ys)
+
+
+
+
+
+
+
+
+
+
+reverse (xs ++ ys) = reverse ys ++ reverse xs
+
+-- 1. xs = a:as
+reverse (a:as ++ ys) == reverse ys ++ reverse (a:as)
+rev (a:as ++ ys) [] == reverse ys ++ reverse (a:as)
+rev (a:(as ++ ys)) [] == reverse ys ++ reverse (a:as)
+rev (as ++ ys) [a] == reverse ys ++ reverse (a:as)
+
+
+
+
+reverse (x:xs) == reverse xs ++ [x]
+rev (x:xs) [] == reverse xs ++ [x]
+rev xs x == reverse xs ++ [x]
+
+
+rev xs [x] == reverse xs ++ [x]
+
+
+rev xs ys == reverse xs ++ ys
+
+rev (x:xs) ys == reverse (x:xs) ++ ys
+rev xs (x:ys) == reverse xs ++ [x] ++ ys
+rev xs (x:ys) == reverse xs ++ (x:ys)
+
+
+
+
+
+
+
+rev [] x == reverse [] ++ [x]  ==> TRUE
+
+rev (y:ys) x == reverse (y:ys) ++ [x]
+
+rev (y:ys) (y:x) == reverse (y:ys) ++ [x]
+
+
+
+
+
+rev (x:xs) [] == reverse xs ++ [x]
+
+
+
+
+
+
+
